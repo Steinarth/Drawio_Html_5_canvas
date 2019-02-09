@@ -1,0 +1,113 @@
+body {
+    padding: 0;
+    margin: 0;
+    height: 100%;
+}
+
+html {
+    height: 100%;
+}
+
+.fa {
+    font-size: 1.8em;
+}
+
+.drawio-container {
+    border: 1.5px solid rgb(214, 215, 213);
+    border-radius: 2px;
+    height: 100%;
+    width: 100%;
+}
+
+.drawio-container > .properties {
+    display: grid;
+    grid-template-columns: auto auto;
+    grid-template-areas: "propFile propHeader";
+    background-color: #494747;
+}
+
+.drawio-container > .properties > h2 {
+    display: inline;
+    grid-area: propHeader;
+    justify-self:end;
+    padding-right: 25px;
+    font-size:1.2em;
+    cursor: pointer;
+}
+
+.drawio-container > .properties > h2 > span {
+    color:rgb(255, 0, 0);
+}
+
+.drawio-container > .properties > .propOptions {
+    grid-area: propFile;
+    display: grid;
+    grid-template-columns: 1fr 1fr 3fr 2fr 1fr 10fr 9fr;
+
+    align-self: center;
+    padding-left: 10px;
+}
+
+.drawio-container > .properties > .propOptions > label {
+    font-size: 1.2em;
+    align-self: center;
+}
+
+.drawio-container > .properties > .propOptions > label:hover {
+    color:white;
+    cursor: pointer;
+}
+
+aside {
+    background-color: red;
+}
+
+.mainContainer {
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 0.5fr 18fr;
+}
+
+.mainContainer > .drawing-objects {
+    background-color: #494747;
+    height: 100%;
+    border: 1.5px solid rgb(214, 215, 213);
+    border-radius: 2px;
+    display: grid;
+    grid-template-rows: 35px 35px 35px 35px 35px 35px 35px 1fr;
+    justify-content: center;
+    align-items: center;
+}
+
+.mainContainer > .drawing-objects > .icon {
+    font-size: 1.3em;
+}
+
+.mainContainer > .drawing-objects > .icon:hover {
+    color:white;
+    cursor: pointer;
+}
+
+.mainContainer > .canvas-container {
+    background-color: rgba(155,155,155,0.2);
+    display: grid;
+    justify-content: center;
+}
+
+.mainContainer > .drawing-objects > .selected {
+    color: white;
+}
+
+#my-canvas {
+    background-color: white;
+}
+
+.hidden {
+    display: none;
+}
+
+label {
+    justify-self:center;
+    font-size: 1.1em;
+}
