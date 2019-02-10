@@ -3,7 +3,7 @@
 
 window.drawio = {
     shapes:[],
-    selectedShape: 'rectangle',
+    selectedShape: $('.selected'),
     canvas: document.getElementById('my-canvas'),
     ctx: document.getElementById('my-canvas').getContext('2d'),
     selectedElement: null,
@@ -12,15 +12,20 @@ window.drawio = {
     color:'#FF0000',
     availableShapes: {
         RECTANGLE: 'rectangle',
-        CIRCLE:'Circle'
+        CIRCLE:'circle',
+        LINE:'line'
     }
 };
 
 // Document is loaded and prased
 $(function() {
+    // Get the default selected from the HTML
+    drawio.selectedShape = $('.selected').data('shape');
+
     // Document is loaded and parsed
     function drawCanvas() {
         if(drawio.selectedElement) {
+            console.log('here with:', drawio.selectedElement);
             drawio.selectedElement.render();
             for (var i = 0; i < drawio.shapes.length; i++) {
                 drawio.shapes[i].render();
@@ -28,6 +33,7 @@ $(function() {
         }
     };
 
+    // Decides when to show the fill checkbox
     function showFillCheckBox() {
         switch (drawio.selectedShape) {
             case drawio.availableShapes.RECTANGLE:
@@ -35,13 +41,15 @@ $(function() {
                 break;
             case drawio.availableShapes.CIRCLE:
                 $('.fillLabel').removeClass('hidden');
+                break;
             default:
                 $('.fillLabel').addClass('hidden');
         }
     };
 
-    $('.fillLabel').on('click', function() {
+    $('.fillCheckbox').on('click', function() {
         if($(".fillCheckbox").is(':checked')) {
+            console.log('true');
             drawio.fillShape = true;
         } else {
             drawio.fillShape = false;
@@ -49,10 +57,10 @@ $(function() {
     });
 
     $('.icon').on('click', function() {
-        console.log($(this).data('shape'));
         $('.icon').removeClass('selected');
         $(this).addClass('selected');
         drawio.selectedShape = $(this).data('shape');
+        console.log(drawio.selectedShape);
         showFillCheckBox();
     });
 
@@ -64,10 +72,12 @@ $(function() {
     // mousedown
     $('#my-canvas').on('mousedown', function(mouseEvent) {
         drawio.color = $('#changeColorBtn')[0].style.backgroundColor;
-
         switch (drawio.selectedShape) {
             case drawio.availableShapes.RECTANGLE:
                 drawio.selectedElement = new Rectangle({x:mouseEvent.offsetX, y:mouseEvent.offsetY}, 0, 0,drawio.fillShape, drawio.thickness, drawio.color);
+                break;
+            case drawio.availableShapes.LINE:
+                drawio.selectedElement = new Line({x:mouseEvent.offsetX, y:mouseEvent.offsetY}, drawio.color, drawio.thickness);
                 break;
             default:
                 drawio.selectedElement = new Rectangle({x:mouseEvent.offsetX, y:mouseEvent.offsetY}, 0, 0,drawio.fillShape, drawio.thickness, drawio.color);
