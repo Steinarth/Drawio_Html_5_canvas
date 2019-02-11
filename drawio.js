@@ -9,11 +9,16 @@ window.drawio = {
     selectedElement: null,
     fillShape:false,
     thickness:3,
+    selected:false,
+    text:'',
+    font: "italic 36px Unknown Font, sans-serif",
     color:'#FF0000',
     availableShapes: {
         RECTANGLE: 'rectangle',
         CIRCLE:'circle',
-        LINE:'line'
+        LINE:'line',
+        TEXT:'text',
+        SELECT: 'select'
     }
 };
 
@@ -31,6 +36,33 @@ $(function() {
         }
     };
 
+    $('#textInput').on('input', function(e) {
+        drawio.color = $('#changeColorBtn')[0].style.backgroundColor;
+        drawio.selected = false;
+        drawio.text = e.target.value;
+        if(drawio.selectedElement == null) {
+            drawio.selectedElement = new Textt({x:300, y:100},drawio.text, drawio.color,drawio.fontSize, drawio.fillShape);
+            drawio.selectedElement.resize(drawio.text, drawio.color, drawio.font);
+
+        } else {
+            drawio.ctx.clearRect(0,0, drawio.canvas.width, drawio.canvas.height);
+            drawio.selectedElement.resize(drawio.text, drawio.color, drawio.font);
+        }
+        drawCanvas();
+
+    });
+
+    $('.textContainerBtn').on('click', function(e) {
+        if(drawio.text) {
+            drawio.selectedElement.message = drawio.text;
+            drawio.shapes.push(drawio.selectedElement);
+            drawio.selectedElement = null;
+            drawio.text = '';
+            drawio.selected = false;
+            $('#textInput').val('');
+        }
+    });
+
     // Decides when to show the fill checkbox
     function showFillCheckBox() {
         switch (drawio.selectedShape) {
@@ -45,6 +77,21 @@ $(function() {
         }
     };
 
+    // Decides when to show the text box
+    function showTextBox() {
+        switch (drawio.selectedShape) {
+            case drawio.availableShapes.TEXT:
+                $('#textInput').removeClass('hidden');
+                $('.textContainerBtn').removeClass('buttonNot');
+                break;
+            default:
+                $('#textInput').addClass('hidden');
+                $('.textContainerBtn').addClass('buttonNot');
+        }
+    };
+
+
+
     $('.fillCheckbox').on('click', function() {
         if($(".fillCheckbox").is(':checked')) {
             drawio.fillShape = true;
@@ -58,6 +105,7 @@ $(function() {
         $(this).addClass('selected');
         drawio.selectedShape = $(this).data('shape');
         showFillCheckBox();
+        showTextBox();
     });
 
     $('#widthInput').on('change', function() {
@@ -77,6 +125,17 @@ $(function() {
             case drawio.availableShapes.CIRCLE:
                 drawio.selectedElement = new Circle({x:mouseEvent.offsetX, y:mouseEvent.offsetY}, drawio.color, drawio.thickness, drawio.fillShape);
                 break;
+            case drawio.availableShapes.TEXT:
+                if(drawio.selectedElement) {
+                    if(drawio.selectedElement.beginWidth < mouseEvent.offsetX && drawio.selectedElement.endWidth > mouseEvent.offsetX) {
+                        drawio.selected = true;
+                    }
+                }
+                break;
+            case drawio.availableShapes.SELECT:
+
+                break;
+
             default:
                 drawio.selectedElement = new Rectangle({x:mouseEvent.offsetX, y:mouseEvent.offsetY},  drawio.color, drawio.thickness);
                 break;
@@ -86,16 +145,30 @@ $(function() {
     // mousemove
     $('#my-canvas').on('mousemove', function(mouseEvent) {
         if(drawio.selectedElement) {
-            drawio.ctx.clearRect(0,0, drawio.canvas.width, drawio.canvas.height);
-            drawio.selectedElement.resize(mouseEvent.offsetX, mouseEvent.offsetY);
+            if(drawio.selected) {
+                drawio.ctx.clearRect(0,0, drawio.canvas.width, drawio.canvas.height);
+                drawio.selectedElement.move({x:mouseEvent.offsetX, y:mouseEvent.offsetY});
+            } else {
+                if(drawio.selectedElement.type === drawio.availableShapes.TEXT) {return;}
+                drawio.ctx.clearRect(0,0, drawio.canvas.width, drawio.canvas.height);
+                drawio.selectedElement.resize(mouseEvent.offsetX, mouseEvent.offsetY);
+            }
             drawCanvas();
         }
     });
 
     // mouseup
     $('#my-canvas').on('mouseup', function(mouseEvent) {
-        drawio.shapes.push(drawio.selectedElement);
-        drawio.selectedElement = null;
+        if(drawio.selectedElement) {
+            if(drawio.selectedElement.type == drawio.availableShapes.TEXT) {
+                drawio.selected = false;
+            } else {
+                drawio.txt = '';
+                drawio.shapes.push(drawio.selectedElement);
+                drawio.selectedElement = null;
+            }
+        }
         drawCanvas();
+
     });
 })

@@ -92,7 +92,47 @@ aside {
 .mainContainer > .canvas-container {
     background-color: rgba(155,155,155,0.2);
     display: grid;
-    justify-content: center;
+    grid-template-columns: 1fr auto 1fr;
+    grid-template-areas:
+    ". canvas .";
+}
+
+.mainContainer > .canvas-container > .textContainer > input {
+    box-shadow: 3px 3px 3px rgb(64, 65, 68);
+
+    margin:15px;
+
+    width: 70%;
+    border: none;
+    height: 50px;
+    border-radius: 6px;
+    background: #b3acac;
+    padding: 0 15px;
+    font-size: 1.3em;
+}
+
+.mainContainer > .canvas-container > .textContainer > button {
+    display: inline;
+    box-shadow: 2px 2px 2px rgb(45, 45, 47);
+    border-radius: 2px;
+    font-size: 1.2em;
+    background: #b5b0b0;
+    transition: all 0.7s;
+}
+
+.mainContainer > .canvas-container > .textContainer > .buttonNot {
+    display: inline;
+    box-shadow: 2px 2px 2px rgb(45, 45, 47);
+    border-radius: 2px;
+    font-size: 1.2em;
+    background: #b5b0b0;
+    transition: all 0.7s;
+    display: none;
+}
+
+.mainContainer > .canvas-container > .textContainer > button:hover {
+    background-color: rgb(143, 143, 154);
+
 }
 
 .mainContainer > .drawing-objects > .selected {
@@ -101,6 +141,7 @@ aside {
 
 #my-canvas {
     background-color: white;
+    grid-area: canvas;
 }
 
 .hidden {
