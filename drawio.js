@@ -21,11 +21,9 @@ window.drawio = {
 $(function() {
     // Get the default selected from the HTML
     drawio.selectedShape = $('.selected').data('shape');
-
     // Document is loaded and parsed
     function drawCanvas() {
         if(drawio.selectedElement) {
-            console.log('here with:', drawio.selectedElement);
             drawio.selectedElement.render();
             for (var i = 0; i < drawio.shapes.length; i++) {
                 drawio.shapes[i].render();
@@ -49,7 +47,6 @@ $(function() {
 
     $('.fillCheckbox').on('click', function() {
         if($(".fillCheckbox").is(':checked')) {
-            console.log('true');
             drawio.fillShape = true;
         } else {
             drawio.fillShape = false;
@@ -60,13 +57,11 @@ $(function() {
         $('.icon').removeClass('selected');
         $(this).addClass('selected');
         drawio.selectedShape = $(this).data('shape');
-        console.log(drawio.selectedShape);
         showFillCheckBox();
     });
 
     $('#widthInput').on('change', function() {
         drawio.thickness = $('#widthInput').val();
-        console.log('changed width TO:::', $('#widthInput').val());
     });
 
     // mousedown
@@ -79,8 +74,11 @@ $(function() {
             case drawio.availableShapes.LINE:
                 drawio.selectedElement = new Line({x:mouseEvent.offsetX, y:mouseEvent.offsetY}, drawio.color, drawio.thickness);
                 break;
+            case drawio.availableShapes.CIRCLE:
+                drawio.selectedElement = new Circle({x:mouseEvent.offsetX, y:mouseEvent.offsetY}, drawio.color, drawio.thickness, drawio.fillShape);
+                break;
             default:
-                drawio.selectedElement = new Rectangle({x:mouseEvent.offsetX, y:mouseEvent.offsetY}, 0, 0,drawio.fillShape, drawio.thickness, drawio.color);
+                drawio.selectedElement = new Rectangle({x:mouseEvent.offsetX, y:mouseEvent.offsetY},  drawio.color, drawio.thickness);
                 break;
         }
     });
@@ -98,5 +96,6 @@ $(function() {
     $('#my-canvas').on('mouseup', function(mouseEvent) {
         drawio.shapes.push(drawio.selectedElement);
         drawio.selectedElement = null;
+        drawCanvas();
     });
 })
