@@ -129,13 +129,12 @@ Circle.prototype.resize = function(x,y) {
     * Textt
 **/
 
-function Textt(beginPosition,message,color,fontSize, filled) {
+function Textt(beginPosition,message,color,font, filled) {
     Shape.call(this,beginPosition, color);
-
     this.message = message;
-    this.fontSize = fontSize;
     this.filled = filled;
     this.type = 'text';
+    this.font = font;
     this.beginWidth = beginPosition.x-drawio.ctx.measureText(message).width;
     this.endWidth   = beginPosition.x +drawio.ctx.measureText(message).width;
 };
@@ -145,8 +144,10 @@ Textt.prototype = Object.create(Shape.prototype);
 Textt.prototype.constructor = Textt;
 
 Textt.prototype.render = function() {
+    drawio.ctx.font=this.font;
+
     drawio.ctx.fillStyle = this.color;
-    drawio.ctx.font = this.font;
+
     drawio.ctx.fillText (this.message, this.position.x,this.position.y);
 };
 

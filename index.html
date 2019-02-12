@@ -18,7 +18,15 @@
                     style="border:2px solid black">
                     color
                 </button>
-                <label id="widthLabel">Linewidth <input type="number" name="quantity" min="1" max="200" value=5 id="widthInput"></label>
+                <label id="widthLabel" class="hidden">Linewidth <input type="number" name="quantity" min="1" max="200" value=5 id="widthInput"></label>
+                <label id="fontSizeLabel" class="hidden">Font-size <input type="number" name="quantity" min="1" max="150" value=25 id="fontSizeInput"></label>
+                <select name="fontFamily" class="hidden" id="showFontFamily">
+                  <option value="Arial">Arial</option>
+                  <option value="Times New Roman">Times New Roman</option>
+                  <option value="Courier New">Courier New</option>
+                  <option value="serif">serif</option>
+                  <option value="sans-serif">sans-serif</option>
+                </select>
                 <label class="fillLabel hidden"> Fill Shape<input type="checkbox" name="FillCheckBox" value="Fill" class="fillCheckbox"></label>
             </div>
             <h2>draw<span>IO</span></h2>
@@ -40,9 +48,6 @@
                 <div class="icon selected" data-shape="text">
                     <i class="fas fa-text-width"></i>
                 </div>
-                <!-- <div class="icon" data-shape="palette">
-                    <i class="fas fa-palette"></i>
-                </div> -->
                 <div class="icon" data-shape="select">
                     <i class="fas fa-hand-pointer"></i>
                 </div>

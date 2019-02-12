@@ -11,7 +11,8 @@ window.drawio = {
     thickness:3,
     selected:false,
     text:'',
-    font: "italic 36px Unknown Font, sans-serif",
+    fontSize: 25,
+    fontFamily: 'Arial',
     color:'#FF0000',
     availableShapes: {
         RECTANGLE: 'rectangle',
@@ -41,12 +42,13 @@ $(function() {
         drawio.selected = false;
         drawio.text = e.target.value;
         if(drawio.selectedElement == null) {
-            drawio.selectedElement = new Textt({x:300, y:100},drawio.text, drawio.color,drawio.fontSize, drawio.fillShape);
-            drawio.selectedElement.resize(drawio.text, drawio.color, drawio.font);
+            console.log(drawio.fontSize + 'px ' + drawio.fontFamily);
+            drawio.selectedElement = new Textt({x:300, y:100},drawio.text, drawio.color,drawio.fontSize + 'px ' + drawio.fontFamily, drawio.fillShape);
+            drawio.selectedElement.resize(drawio.text, drawio.color, drawio.fontSize + 'px ' + drawio.fontFamily);
 
         } else {
             drawio.ctx.clearRect(0,0, drawio.canvas.width, drawio.canvas.height);
-            drawio.selectedElement.resize(drawio.text, drawio.color, drawio.font);
+            drawio.selectedElement.resize(drawio.text, drawio.color, drawio.fontSize + 'px ' + drawio.fontFamily);
         }
         drawCanvas();
 
@@ -90,6 +92,47 @@ $(function() {
         }
     };
 
+    // Decides when to show width select box
+    function showWidthBox() {
+        switch (drawio.selectedShape) {
+            case drawio.availableShapes.CIRCLE:
+                $('#widthLabel').removeClass('hidden');
+                break;
+            case drawio.availableShapes.RECTANGLE:
+                $('#widthLabel').removeClass('hidden');
+                break;
+            case drawio.availableShapes.LINE:
+                $('#widthLabel').removeClass('hidden');
+                break;
+            case drawio.availableShapes.PEN:
+                $('#widthLabel').removeClass('hidden');
+                break;
+            default:
+                $('#widthLabel').addClass('hidden');
+        }
+    };
+
+    // Decides when to show fontSize select box
+    function showFontSize() {
+        switch (drawio.selectedShape) {
+            case drawio.availableShapes.TEXT:
+                $('#fontSizeLabel').removeClass('hidden');
+                break;
+            default:
+                $('#fontSizeLabel').addClass('hidden');
+        }
+    };
+
+    // Decides when to show the drop down for font-family
+    function showFontFamily() {
+        switch (drawio.selectedShape) {
+            case drawio.availableShapes.TEXT:
+                $('#showFontFamily').removeClass('hidden');
+                break;
+            default:
+                $('#showFontFamily').addClass('hidden');
+        }
+    };
 
 
     $('.fillCheckbox').on('click', function() {
@@ -106,10 +149,33 @@ $(function() {
         drawio.selectedShape = $(this).data('shape');
         showFillCheckBox();
         showTextBox();
+        showWidthBox();
+        showFontSize();
+        showFontFamily();
     });
 
     $('#widthInput').on('change', function() {
         drawio.thickness = $('#widthInput').val();
+    });
+
+
+    $('#fontSizeInput').on('change', function() {
+        drawio.fontSize = $('#fontSizeInput').val();
+        if(drawio.selectedElement) {
+            drawio.ctx.clearRect(0,0, drawio.canvas.width, drawio.canvas.height);
+            drawio.selectedElement.resize(drawio.text, drawio.color, drawio.fontSize + 'px ' + drawio.fontFamily);
+            drawCanvas();
+        }
+    });
+
+    $('#showFontFamily').on('change', function() {
+        drawio.fontFamily = $('#showFontFamily').val();
+        if(drawio.selectedElement) {
+            drawio.ctx.clearRect(0,0, drawio.canvas.width, drawio.canvas.height);
+            drawio.selectedElement.resize(drawio.text, drawio.color, drawio.fontSize + 'px ' + drawio.fontFamily);
+            drawCanvas();
+        }
+
     });
 
     // mousedown
