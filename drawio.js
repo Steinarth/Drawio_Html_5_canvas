@@ -19,7 +19,8 @@ window.drawio = {
         CIRCLE:'circle',
         LINE:'line',
         TEXT:'text',
-        SELECT: 'select'
+        SELECT: 'select',
+        PEN:'pen',
     }
 };
 
@@ -27,6 +28,10 @@ window.drawio = {
 $(function() {
     // Get the default selected from the HTML
     drawio.selectedShape = $('.selected').data('shape');
+    // Show the widthBox if pen
+    showWidthBox();
+    showTextBox();
+
     // Document is loaded and parsed
     function drawCanvas() {
         if(drawio.selectedElement) {
@@ -105,6 +110,7 @@ $(function() {
                 $('#widthLabel').removeClass('hidden');
                 break;
             case drawio.availableShapes.PEN:
+                console.log('here');
                 $('#widthLabel').removeClass('hidden');
                 break;
             default:
@@ -180,6 +186,7 @@ $(function() {
 
     // mousedown
     $('#my-canvas').on('mousedown', function(mouseEvent) {
+        console.log(drawio.selectedShape);
         drawio.color = $('#changeColorBtn')[0].style.backgroundColor;
         switch (drawio.selectedShape) {
             case drawio.availableShapes.RECTANGLE:
@@ -198,6 +205,12 @@ $(function() {
                     }
                 }
                 break;
+            case drawio.availableShapes.PEN:
+            drawio.selectedElement = new Drawing({
+                x: mouseEvent.offsetX,
+                y: mouseEvent.offsetY
+              }, drawio.color, drawio.thickness);
+              break;
             case drawio.availableShapes.SELECT:
 
                 break;

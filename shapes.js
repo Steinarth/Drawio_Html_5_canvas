@@ -159,8 +159,8 @@ Textt.prototype.resize = function(text,color,font) {
     this.color = color;
     this.font = font;
 
-     drawio.ctx.fillStyle = this.color;
-     drawio.ctx.font = this.font;
+    drawio.ctx.fillStyle = this.color;
+    drawio.ctx.font = this.font;
     drawio.ctx.fillText (this.text, this.position.x,this.position.y);
 };
 
@@ -173,3 +173,36 @@ Textt.prototype.move = function(position) {
     drawio.ctx.font = this.font;
     drawio.ctx.fillText (this.text, this.position.x,this.position.y);
 };
+
+/****
+  Drawing properties
+****/
+
+function Drawing(position, color, thickness) {
+    Shape.call(this, position, color,thickness);
+      this.points = []; // Keeps track of points we need to draw (x,y) coordinates
+    this.type = 'drawing';
+  }
+  
+  Drawing.prototype = Object.create(Shape.prototype);
+  Drawing.prototype.constructor = Drawing;
+  
+  // Push new x,y coordinates into our array
+  Drawing.prototype.resize = function(x, y) {
+      this.points.push({x:x, y:y});
+  }
+  
+  Drawing.prototype.render = function() {
+      drawio.ctx.beginPath();
+      drawio.ctx.moveTo(this.position.x, this.position.y);
+      drawio.ctx.lineWidth = this.thickness;
+      for(var i = 0; i < this.points.length; i++) {
+        drawio.ctx.lineTo(this.points[i].x, this.points[i].y);
+      }
+  
+      drawio.ctx.strokeStyle = this.color;
+      drawio.ctx.stroke();
+  }
+  Drawing.prototype.addPoints = function(points) {
+    this.points = points;
+  }
