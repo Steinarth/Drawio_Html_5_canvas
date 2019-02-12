@@ -3,6 +3,7 @@
 
 window.drawio = {
     shapes:[],
+    undoStack: [],
     selectedShape: $('.selected'),
     canvas: document.getElementById('my-canvas'),
     ctx: document.getElementById('my-canvas').getContext('2d'),
@@ -21,6 +22,7 @@ window.drawio = {
         TEXT:'text',
         SELECT: 'select',
         PEN:'pen',
+        CLEARCANVAS:'clearCanvas',
     }
 };
 
@@ -47,7 +49,6 @@ $(function() {
         drawio.selected = false;
         drawio.text = e.target.value;
         if(drawio.selectedElement == null) {
-            console.log(drawio.fontSize + 'px ' + drawio.fontFamily);
             drawio.selectedElement = new Textt({x:300, y:100},drawio.text, drawio.color,drawio.fontSize + 'px ' + drawio.fontFamily, drawio.fillShape);
             drawio.selectedElement.resize(drawio.text, drawio.color, drawio.fontSize + 'px ' + drawio.fontFamily);
 
@@ -70,6 +71,36 @@ $(function() {
         }
     });
 
+    $('#clearCanvas').on('click', function(e) {
+        drawio.ctx.clearRect(0,0, drawio.canvas.width, drawio.canvas.height);
+        drawio.selectedElement = null;
+        drawio.shapes = [];
+    });
+
+    // Functionality for redo-ing
+    $('#redoArrow').on('click', function(e) {
+        drawio.selectedElement = null;
+        if(drawio.undoStack.length > 0) {
+            let i = drawio.undoStack.pop();
+            drawio.shapes.push(i);
+            i.render();
+        }
+    });
+
+    // Functionality when undo-ing
+    $('#undoArrow').on('click', function(e) {
+        console.log(drawio.shapes.length);
+        if(drawio.shapes.length > 0) {
+            let b = drawio.shapes.pop();
+            drawio.ctx.clearRect(0,0, drawio.canvas.width, drawio.canvas.height);
+            drawio.undoStack.push(b);
+            for (var i = 0; i < drawio.shapes.length; i++) {
+                drawio.shapes[i].render();
+            }
+        }
+    });
+
+    // undoArrow
     // Decides when to show the fill checkbox
     function showFillCheckBox() {
         switch (drawio.selectedShape) {
@@ -110,7 +141,6 @@ $(function() {
                 $('#widthLabel').removeClass('hidden');
                 break;
             case drawio.availableShapes.PEN:
-                console.log('here');
                 $('#widthLabel').removeClass('hidden');
                 break;
             default:
@@ -186,7 +216,6 @@ $(function() {
 
     // mousedown
     $('#my-canvas').on('mousedown', function(mouseEvent) {
-        console.log(drawio.selectedShape);
         drawio.color = $('#changeColorBtn')[0].style.backgroundColor;
         switch (drawio.selectedShape) {
             case drawio.availableShapes.RECTANGLE:
@@ -206,15 +235,11 @@ $(function() {
                 }
                 break;
             case drawio.availableShapes.PEN:
-            drawio.selectedElement = new Drawing({
-                x: mouseEvent.offsetX,
-                y: mouseEvent.offsetY
-              }, drawio.color, drawio.thickness);
+            drawio.selectedElement = new Drawing({ x: mouseEvent.offsetX, y: mouseEvent.offsetY }, drawio.color, drawio.thickness);
               break;
             case drawio.availableShapes.SELECT:
 
                 break;
-
             default:
                 drawio.selectedElement = new Rectangle({x:mouseEvent.offsetX, y:mouseEvent.offsetY},  drawio.color, drawio.thickness);
                 break;

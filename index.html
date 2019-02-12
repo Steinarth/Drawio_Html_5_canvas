@@ -33,23 +33,26 @@
         </nav>
         <div class="mainContainer">
             <div class="drawing-objects">
-                <div class="icon" data-shape="circle">
+                <div class="icon" data-shape="circle" title="Draw circle">
                     <i class="far fa-circle"></i>
                 </div>
-                <div class="icon" data-shape="rectangle">
+                <div class="icon" data-shape="rectangle" title="Draw rectangle">
                     <i class="far fa-square"></i>
                 </div>
-                <div class="icon" data-shape="line">
+                <div class="icon" data-shape="line" title="Draw Line">
                     <i class="fas fa-grip-lines"></i>
                 </div>
-                <div class="icon selected" data-shape="pen">
+                <div class="icon selected" data-shape="pen" title="Pen/Brush">
                     <i class="fas fa-paint-brush"></i>
                 </div>
-                <div class="icon" data-shape="text">
+                <div class="icon" data-shape="text" title="Insert text">
                     <i class="fas fa-text-width"></i>
                 </div>
-                <div class="icon" data-shape="select">
+                <div class="icon" data-shape="select" title="Select">
                     <i class="fas fa-hand-pointer"></i>
+                </div>
+                <div id="clearCanvas" class="icon" data-shape="clearCanvas" title="Clear canvas">
+                     <i class="fas fa-snowplow"></i>
                 </div>
             </div>
             <div class="canvas-container">
@@ -57,9 +60,16 @@
                     <input id="textInput" type="text" name="fname" placeholder="Text value">
                     <button class="textContainerBtn" type="button" name="button" >Create</button>
                 </div>
-                <canvas id="my-canvas" width="800" height="600">
-                    Html5 canvas is not supported
-                </canvas>
+                <div class="canvasArrows">
+                    <canvas id="my-canvas" width="800" height="600">
+                        Html5 canvas is not supported
+                    </canvas>
+                    <div class="arrowContainer">
+                        <i class="fas fa-arrow-right" id="redoArrow" title="Redo"></i>
+                        <i class="fas fa-arrow-left"  id="undoArrow" title="Undo"></i>
+                    </div>
+                </div>
+
             </div>
         </div>
     </div>
