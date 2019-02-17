@@ -13,6 +13,8 @@ Shape.prototype.move = function(position) {
     this.position = position;
 };
 
+Shape.prototype.checkSpace = function(x,y) {return false;}
+
 Shape.prototype.resize = function() { };
 
 function Rectangle(position, width, height, filled,thickness, color) {
@@ -35,13 +37,20 @@ Rectangle.prototype.render = function() {
     } else {
         drawio.ctx.strokeStyle = this.color;
         drawio.ctx.strokeRect(this.position.x, this.position.y, this.width, this.height);
-
     }
 };
 
 Rectangle.prototype.resize = function(x,y) {
     this.width = x - this.position.x;
     this.height = y - this.position.y;
+};
+
+Rectangle.prototype.checkSpace = function(x,y) {
+    if(this.position.x < x && x < this.position.x+this.width &&
+        this.position.y < y && y < this.position.y+this.height) {
+        return true;
+
+    }
 };
 
 /**
@@ -183,15 +192,15 @@ function Drawing(position, color, thickness) {
       this.points = []; // Keeps track of points we need to draw (x,y) coordinates
     this.type = 'drawing';
   }
-  
+
   Drawing.prototype = Object.create(Shape.prototype);
   Drawing.prototype.constructor = Drawing;
-  
+
   // Push new x,y coordinates into our array
   Drawing.prototype.resize = function(x, y) {
       this.points.push({x:x, y:y});
   }
-  
+
   Drawing.prototype.render = function() {
       drawio.ctx.beginPath();
       drawio.ctx.moveTo(this.position.x, this.position.y);
@@ -199,7 +208,7 @@ function Drawing(position, color, thickness) {
       for(var i = 0; i < this.points.length; i++) {
         drawio.ctx.lineTo(this.points[i].x, this.points[i].y);
       }
-  
+
       drawio.ctx.strokeStyle = this.color;
       drawio.ctx.stroke();
   }

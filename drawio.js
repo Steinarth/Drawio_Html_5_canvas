@@ -1,6 +1,8 @@
 // 1. Define a function namespace called DrawIO
 // 2. Create an array to hold on to the shapes currently drawn;
 
+// this.__proto__.__proto__.move.call(this,pos);
+
 window.drawio = {
     shapes:[],
     undoStack: [],
@@ -57,7 +59,6 @@ $(function() {
             drawio.selectedElement.resize(drawio.text, drawio.color, drawio.fontSize + 'px ' + drawio.fontFamily);
         }
         drawCanvas();
-
     });
 
     $('.textContainerBtn').on('click', function(e) {
@@ -89,7 +90,6 @@ $(function() {
 
     // Functionality when undo-ing
     $('#undoArrow').on('click', function(e) {
-        console.log(drawio.shapes.length);
         if(drawio.shapes.length > 0) {
             let b = drawio.shapes.pop();
             drawio.ctx.clearRect(0,0, drawio.canvas.width, drawio.canvas.height);
@@ -194,7 +194,6 @@ $(function() {
         drawio.thickness = $('#widthInput').val();
     });
 
-
     $('#fontSizeInput').on('change', function() {
         drawio.fontSize = $('#fontSizeInput').val();
         if(drawio.selectedElement) {
@@ -238,7 +237,13 @@ $(function() {
             drawio.selectedElement = new Drawing({ x: mouseEvent.offsetX, y: mouseEvent.offsetY }, drawio.color, drawio.thickness);
               break;
             case drawio.availableShapes.SELECT:
-
+                drawio.shapes.forEach((el,index) => {
+                    if(el.checkSpace(mouseEvent.offsetX, mouseEvent.offsetY) == true) {
+                        drawio.selected = true;
+                        drawio.selectedElement = drawio.shapes[index];
+                        return;
+                    }
+                });
                 break;
             default:
                 drawio.selectedElement = new Rectangle({x:mouseEvent.offsetX, y:mouseEvent.offsetY},  drawio.color, drawio.thickness);
@@ -267,6 +272,11 @@ $(function() {
             if(drawio.selectedElement.type == drawio.availableShapes.TEXT) {
                 drawio.selected = false;
             } else {
+                if(drawio.availableShapes.SELECT == drawio.selectedShape) {
+                    drawio.selected = false;
+                    drawio.selectedElement.position.x = mouseEvent.offsetX;
+                    drawio.selectedElement.position.y = mouseEvent.offsetY;
+                }
                 drawio.txt = '';
                 drawio.shapes.push(drawio.selectedElement);
                 drawio.selectedElement = null;

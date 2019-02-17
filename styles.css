@@ -13,7 +13,7 @@ html {
 }
 
 .drawio-container {
-    border: 1.5px solid rgb(214, 215, 213);
+    border: 1.5px solid rgb(25, 26, 25);
     border-radius: 2px;
     height: 100%;
     width: 100%;
@@ -23,7 +23,7 @@ html {
     display: grid;
     grid-template-columns: auto auto;
     grid-template-areas: "propFile propHeader";
-    background-color: #494747;
+    background-color: #333;
 }
 
 .drawio-container > .properties > h2 {
@@ -33,6 +33,7 @@ html {
     padding-right: 25px;
     font-size:1.2em;
     cursor: pointer;
+    color: rgb(207, 214, 205)
 }
 
 .drawio-container > .properties > h2 > span {
@@ -46,6 +47,12 @@ html {
 
     align-self: center;
     padding-left: 10px;
+    color:#aca2a2;
+}
+
+.drawio-container > .properties > .propOptions > .fa-file:hover {
+    color:white;
+    cursor: pointer;
 }
 
 .drawio-container > .properties > .propOptions > label {
@@ -70,7 +77,7 @@ aside {
 }
 
 .mainContainer > .drawing-objects {
-    background-color: #494747;
+    background-color: #333;
     height: 100%;
     border: 1.5px solid rgb(214, 215, 213);
     border-radius: 2px;
@@ -82,6 +89,7 @@ aside {
 
 .mainContainer > .drawing-objects > .icon {
     font-size: 1.3em;
+    color:#aca2a2
 }
 
 .mainContainer > .drawing-objects > .icon:hover {
