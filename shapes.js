@@ -49,7 +49,6 @@ Rectangle.prototype.checkSpace = function(x,y) {
     if(this.position.x < x && x < this.position.x+this.width &&
         this.position.y < y && y < this.position.y+this.height) {
         return true;
-
     }
 };
 
@@ -77,7 +76,7 @@ Line.prototype.render = function() {
     drawio.ctx.lineWidth  = this.thickness;
     // change the color of the line
     drawio.ctx.strokeStyle = this.color;
-    // Staring point (beginPosition)
+    // Starting point (beginPosition)
      drawio.ctx.moveTo(this.position.x,this.position.y);
     // End point (endPosition)
     drawio.ctx.lineTo(this.endPosition.x,this.endPosition.y);
@@ -90,6 +89,39 @@ Line.prototype.resize = function(x,y) {
     // the endPosition coordinates
     this.endPosition.x = x;
     this.endPosition.y = y;
+};
+
+// changes the location of the Line
+Line.prototype.move = function(position) {
+    this.xLength = this.endPosition.x-this.position.x;
+    this.yLength = this.endPosition.y-this.position.y;
+
+    this.position = position;
+
+    this.endPosition.x = position.x + this.xLength;
+    this.endPosition.y = position.y + this.yLength;
+};
+
+Rectangle.prototype.checkSpace = function(x,y) {
+    if(this.position.x < x && x < this.position.x+this.width &&
+        this.position.y < y && y < this.position.y+this.height) {
+        return true;
+    }
+};
+
+Line.prototype.checkSpace = function(x,y) {
+    console.log(this.position, {x:x,y:y}, this.endPosition);
+    if(this.position.x < x && x < this.endPosition.x &&
+       this.position.y < y && y < this.endPosition.y) {
+           return true;
+   }
+
+   if(x < this.position.x  && this.endPosition.x < x &&
+      this.position.y < y  && y < this.endPosition.y) {
+          return true;
+  }
+  
+   return false;
 };
 
 /**
