@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>DrawIO</title>
     <link rel="stylesheet" href="styles.css">
@@ -7,25 +8,23 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.js"></script>
 
 </head>
+
 <body>
     <div class="drawio-container">
         <nav class="properties">
             <div class="propOptions">
                 <i class="fa fa-file"></i>
-                <button
-                    id="changeColorBtn"
-                    class="jscolor {valueElement:null,value:'#aca2a2'}"
-                    style="border:2px solid black">
+                <button id="changeColorBtn" class="jscolor {valueElement:null,value:'#aca2a2'}" style="border:2px solid black">
                     color
                 </button>
                 <label id="widthLabel" class="hidden">Linewidth <input type="number" name="quantity" min="1" max="200" value=5 id="widthInput"></label>
                 <label id="fontSizeLabel" class="hidden">Font-size <input type="number" name="quantity" min="1" max="150" value=25 id="fontSizeInput"></label>
                 <select name="fontFamily" class="hidden" id="showFontFamily">
-                  <option value="Arial">Arial</option>
-                  <option value="Times New Roman">Times New Roman</option>
-                  <option value="Courier New">Courier New</option>
-                  <option value="serif">serif</option>
-                  <option value="sans-serif">sans-serif</option>
+                    <option value="Arial">Arial</option>
+                    <option value="Times New Roman">Times New Roman</option>
+                    <option value="Courier New">Courier New</option>
+                    <option value="serif">serif</option>
+                    <option value="sans-serif">sans-serif</option>
                 </select>
                 <label class="fillLabel hidden"> Fill Shape<input type="checkbox" name="FillCheckBox" value="Fill" class="fillCheckbox"></label>
             </div>
@@ -52,13 +51,13 @@
                     <i class="fas fa-hand-pointer"></i>
                 </div>
                 <div id="clearCanvas" class="icon" data-shape="clearCanvas" title="Clear canvas">
-                     <i class="fas fa-snowplow"></i>
+                    <i class="fas fa-snowplow"></i>
                 </div>
             </div>
             <div class="canvas-container">
                 <div class="textContainer">
                     <input id="textInput" type="text" name="fname" placeholder="Text value">
-                    <button class="textContainerBtn" type="button" name="button" >Create</button>
+                    <button class="textContainerBtn" type="button" name="button">Create</button>
                 </div>
                 <div class="canvasArrows">
                     <canvas id="my-canvas" width="800" height="600">
@@ -66,7 +65,7 @@
                     </canvas>
                     <div class="arrowContainer">
                         <i class="fas fa-arrow-right" id="redoArrow" title="Redo"></i>
-                        <i class="fas fa-arrow-left"  id="undoArrow" title="Undo"></i>
+                        <i class="fas fa-arrow-left" id="undoArrow" title="Undo"></i>
                     </div>
                 </div>
 
@@ -77,5 +76,13 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="shapes.js" charset="utf-8"></script>
     <script src="drawio.js" charset="utf-8"></script>
+    <script src="shapes/Rectangle.js" charset="utf-8"></script>
+    <script src="shapes/Line.js" charset="utf-8"></script>
+    <script src="shapes/Circle.js" charset="utf-8"></script>
+    <script src="shapes/Text.js" charset="utf-8"></script>
+    <script src="shapes/Drawing.js" charset="utf-8"></script>
+    <script src="show.js" charset="utf-8"></script>
+    <script src="extra_events.js" charset="utf-8"></script>
 </body>
+
 </html>
