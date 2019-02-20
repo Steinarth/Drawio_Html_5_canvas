@@ -18,7 +18,6 @@ Drawing.prototype.resize = function(x, y) {
 
 Drawing.prototype.render = function() {
     drawio.ctx.beginPath();
-    drawio.ctx.moveTo(this.position.x, this.position.y);
     drawio.ctx.lineWidth = this.thickness;
     for (var i = 0; i < this.points.length; i++) {
         drawio.ctx.lineTo(this.points[i].x, this.points[i].y);
@@ -28,19 +27,28 @@ Drawing.prototype.render = function() {
     drawio.ctx.stroke();
 }
 Drawing.prototype.addPoints = function(points) {
+    console.log('addingPoints');
     this.points = points;
 }
 
-Drawing.prototype.checkSpace = function(x,y) {
-    console.log('points:', this.points);
-    return true;
+Drawing.prototype.checkSpace = function(x, y) {
+    // Hard to hit exactly point.x, added 25 for easier clicking.
+    if (this.points.some((point) => {
+        return (x <= (point.x + 25) && x >= (point.x - 25) && y <= (point.y + 25) && y >= (point.y - 25));
+    })) {
+        this.points.forEach((point) => {
+            drawio.offsetX.push(x-point.x);
+            drawio.offsetY.push(y-point.y);
+        });
+        return true;
+    }
+    return false;
 }
 
-Drawing.prototype.move = function({x,y}) {
-    console.log(this.points);
-    this.points.forEach((el) => {
-        el.x += 10;
-        el.y += 10;
-    });
-    console.log(this.points);
+Drawing.prototype.move = function({x, y}) {
+    var newPoints = new Array;
+    this.points.forEach((point,index) => {
+        point.x = x-drawio.offsetX[index];
+        point.y = y-drawio.offsetY[index];
+    })
 }

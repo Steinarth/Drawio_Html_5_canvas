@@ -1,9 +1,8 @@
-// 1. Define a function namespace called DrawIO
-// 2. Create an array to hold on to the shapes currently drawn;
-
 window.drawio = {
     shapes: [],
     undoStack: [],
+    offsetX: [],
+    offsetY: [],
     selectedShape: $('.selected'),
     canvas: document.getElementById('my-canvas'),
     ctx: document.getElementById('my-canvas').getContext('2d'),
@@ -80,10 +79,12 @@ $(function() {
                 }, drawio.color, drawio.thickness);
                 break;
             case drawio.availableShapes.SELECT:
+            console.log(mouseEvent.offsetX, mouseEvent.offsetY);
                 drawio.shapes.forEach((el, index) => {
                     if (el.checkSpace(mouseEvent.offsetX, mouseEvent.offsetY) == true) {
                         drawio.selected = true;
                         drawio.selectedElement = drawio.shapes[index];
+                        console.log(drawio.selectedElement);
                         return;
                     }
                 });
@@ -101,8 +102,8 @@ $(function() {
     $('#my-canvas').on('mousemove', function(mouseEvent) {
         if (drawio.selectedElement) {
             if (drawio.selected) {
-                drawio.ctx.clearRect(0, 0, drawio.canvas.width, drawio.canvas.height);
                 drawio.selectedElement.move({x: mouseEvent.offsetX, y: mouseEvent.offsetY});
+                drawio.ctx.clearRect(0, 0, drawio.canvas.width, drawio.canvas.height);
             } else {
                 if (drawio.selectedElement.type === drawio.availableShapes.TEXT) {
                     return;
