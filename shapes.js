@@ -102,15 +102,7 @@ Line.prototype.move = function(position) {
     this.endPosition.y = position.y + this.yLength;
 };
 
-Rectangle.prototype.checkSpace = function(x,y) {
-    if(this.position.x < x && x < this.position.x+this.width &&
-        this.position.y < y && y < this.position.y+this.height) {
-        return true;
-    }
-};
-
 Line.prototype.checkSpace = function(x,y) {
-    console.log(this.position, {x:x,y:y}, this.endPosition);
     if(this.position.x < x && x < this.endPosition.x &&
        this.position.y < y && y < this.endPosition.y) {
            return true;
@@ -120,7 +112,7 @@ Line.prototype.checkSpace = function(x,y) {
       this.position.y < y  && y < this.endPosition.y) {
           return true;
   }
-  
+
    return false;
 };
 
@@ -166,6 +158,33 @@ Circle.prototype.resize = function(x,y) {
     this.radius = Math.sqrt(xLength * xLength + yLength * yLength);
 };
 
+Circle.prototype.checkSpace = function(x,y) {
+    move = false;
+    // Right side of circle
+    if(this.position.x < x && x < this.position.x+this.radius) {
+        // Lower side of right side of circle
+        if(this.position.y < y && y < this.position.y+this.radius) {
+            move = true;
+        }
+        // Upper side of right side of circle
+        if(y < this.position.y && this.position.y-this.radius < y) {
+            move = true;
+        }
+    }
+    // Left side of Circle
+    if(x < this.position.x && this.position.x-this.radius < x) {
+        // Lower left side of Circle
+        if(this.position.y < y && y < this.position.y+this.radius) {
+            move = true;
+        }
+        // Upper left side of Circle
+        if(y < this.position.y && this.position.y-this.radius < y) {
+            move = true;
+        }
+    }
+    return move;
+};
+
 /**
     * Textt
 **/
@@ -176,8 +195,8 @@ function Textt(beginPosition,message,color,font, filled) {
     this.filled = filled;
     this.type = 'text';
     this.font = font;
-    this.beginWidth = beginPosition.x-drawio.ctx.measureText(message).width;
-    this.endWidth   = beginPosition.x +drawio.ctx.measureText(message).width;
+    this.beginWidth = -beginPosition.x - drawio.ctx.measureText(message).width;
+    this.endWidth   = beginPosition.x + drawio.ctx.measureText(message).width;
 };
 
 // Assign the prototype
@@ -214,6 +233,20 @@ Textt.prototype.move = function(position) {
     drawio.ctx.font = this.font;
     drawio.ctx.fillText (this.text, this.position.x,this.position.y);
 };
+
+Textt.prototype.checkSpace = function(x,y) {
+    console.log(this.position, y);
+    lineHeight=drawio.ctx.measureText('M').width;
+    console.log(lineHeight);
+    // Correct x coordinates
+    if(this.beginWidth < x && this.endWidth > x) {
+        // Correct y coords
+        if(y < this.position.y+lineHeight && this.position.y-lineHeight < y) {
+            return true;
+        }
+    }
+
+}
 
 /****
   Drawing properties

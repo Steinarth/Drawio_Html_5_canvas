@@ -53,7 +53,6 @@ $(function() {
         if(drawio.selectedElement == null) {
             drawio.selectedElement = new Textt({x:300, y:100},drawio.text, drawio.color,drawio.fontSize + 'px ' + drawio.fontFamily, drawio.fillShape);
             drawio.selectedElement.resize(drawio.text, drawio.color, drawio.fontSize + 'px ' + drawio.fontFamily);
-
         } else {
             drawio.ctx.clearRect(0,0, drawio.canvas.width, drawio.canvas.height);
             drawio.selectedElement.resize(drawio.text, drawio.color, drawio.fontSize + 'px ' + drawio.fontFamily);
@@ -269,7 +268,9 @@ $(function() {
     // mouseup
     $('#my-canvas').on('mouseup', function(mouseEvent) {
         if(drawio.selectedElement) {
-            if(drawio.selectedElement.type == drawio.availableShapes.TEXT) {
+            if(drawio.selectedElement.type == drawio.availableShapes.TEXT
+               && drawio.selectedShape != 'select') {
+                   console.log('hey');
                 drawio.selected = false;
             } else {
                 if(drawio.availableShapes.SELECT == drawio.selectedShape) {
