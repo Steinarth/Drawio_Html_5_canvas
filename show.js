@@ -61,6 +61,9 @@ function showColor() {
         case drawio.availableShapes.SELECT:
             $('#changeColorBtn').addClass('hidden');
             break;
+        case drawio.availableShapes.CLEARCANVAS:
+            $('#changeColorBtn').addClass('hidden');
+            break;
         default:
             $('#changeColorBtn').removeClass('hidden');
     }

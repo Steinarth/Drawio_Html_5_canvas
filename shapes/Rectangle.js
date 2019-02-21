@@ -3,7 +3,7 @@ function Rectangle(position, width, height, filled, thickness, color) {
     this.width = width;
     this.height = height;
     this.filled = filled;
-    this.type   = drawio.availableShapes.RECTANGLE;
+    this.type = drawio.availableShapes.RECTANGLE;
 };
 
 // Assign the prototype

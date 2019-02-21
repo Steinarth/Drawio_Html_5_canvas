@@ -38,7 +38,6 @@ Textt.prototype.resize = function(text, color, font) {
 };
 
 Textt.prototype.move = function(position, message) {
-    console.log('moving', message);
     this.message = message;
     this.position = position;
     this.beginWidth = this.position.x - drawio.ctx.measureText(this.text).width;

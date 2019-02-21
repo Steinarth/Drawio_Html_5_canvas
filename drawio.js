@@ -52,7 +52,7 @@ $(function() {
                 drawio.selectedElement = new Circle({
                     x: mouseEvent.offsetX,
                     y: mouseEvent.offsetY
-                }, null,drawio.color, drawio.thickness, drawio.fillShape);
+                }, null, drawio.color, drawio.thickness, drawio.fillShape);
                 break;
             case drawio.availableShapes.TEXT:
                 if (drawio.selectedElement) {
@@ -91,10 +91,16 @@ $(function() {
     $('#my-canvas').on('mousemove', function(mouseEvent) {
         if (drawio.selectedElement) {
             if (drawio.selected) {
-                if(drawio.selectedShape == drawio.availableShapes.SELECT) {
-                    drawio.selectedElement.move({x: mouseEvent.offsetX, y: mouseEvent.offsetY}, drawio.selectedElement.text);
+                if (drawio.selectedShape == drawio.availableShapes.SELECT) {
+                    drawio.selectedElement.move({
+                        x: mouseEvent.offsetX,
+                        y: mouseEvent.offsetY
+                    }, drawio.selectedElement.text);
                 } else {
-                    drawio.selectedElement.move({x: mouseEvent.offsetX, y: mouseEvent.offsetY}, drawio.text);
+                    drawio.selectedElement.move({
+                        x: mouseEvent.offsetX,
+                        y: mouseEvent.offsetY
+                    }, drawio.text);
                 }
                 clearCanvas();
             } else {

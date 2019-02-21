@@ -1,9 +1,8 @@
-
 /**
     * Circle
 **/
 
-function Circle(beginPosition, radius,color, thickness, filled) {
+function Circle(beginPosition, radius, color, thickness, filled) {
     Shape.call(this, beginPosition, color, thickness);
     // We don't know the radius at the beginning
     // this.radius = null;

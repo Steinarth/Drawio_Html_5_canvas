@@ -36,8 +36,8 @@ Drawing.prototype.checkSpace = function(x, y) {
         return (x <= (point.x + 25) && x >= (point.x - 25) && y <= (point.y + 25) && y >= (point.y - 25));
     })) {
         this.points.forEach((point) => {
-            drawio.offsetX.push(x-point.x);
-            drawio.offsetY.push(y-point.y);
+            drawio.offsetX.push(x - point.x);
+            drawio.offsetY.push(y - point.y);
         });
         return true;
     }
@@ -46,8 +46,8 @@ Drawing.prototype.checkSpace = function(x, y) {
 
 Drawing.prototype.move = function({x, y}) {
     var newPoints = new Array;
-    this.points.forEach((point,index) => {
-        point.x = x-drawio.offsetX[index];
-        point.y = y-drawio.offsetY[index];
+    this.points.forEach((point, index) => {
+        point.x = x - drawio.offsetX[index];
+        point.y = y - drawio.offsetY[index];
     })
 }

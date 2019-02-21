@@ -1,4 +1,3 @@
-
 /**
     * LINE
 **/
@@ -51,10 +50,17 @@ Line.prototype.move = function(position) {
 };
 
 Line.prototype.checkSpace = function(x, y) {
+    // Horizontal line
+    if (this.position.x < x && x < this.endPosition.x && y <= (this.position.y + 25) && y >= (this.position.y - 25)) {
+        return true;
+    }
+
+    // From left to right
     if (this.position.x < x && x < this.endPosition.x && this.position.y < y && y < this.endPosition.y) {
         return true;
     }
 
+    // from right to left
     if (x < this.position.x && this.endPosition.x < x && this.position.y < y && y < this.endPosition.y) {
         return true;
     }

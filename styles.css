@@ -19,39 +19,38 @@ html {
     width: 100%;
 }
 
-.drawio-container > .properties {
+.drawio-container>.properties {
     display: grid;
     grid-template-columns: auto auto;
     grid-template-areas: "propFile propHeader";
     background-color: #333;
 }
 
-.drawio-container > .properties > h2 {
+.drawio-container>.properties>h2 {
     display: inline;
     grid-area: propHeader;
-    justify-self:end;
+    justify-self: end;
     padding-right: 25px;
-    font-size:1.2em;
+    font-size: 1.2em;
     cursor: pointer;
     color: rgb(207, 214, 205)
 }
 
-.drawio-container > .properties > h2 > span {
-    color:rgb(255, 0, 0);
+.drawio-container>.properties>h2>span {
+    color: rgb(255, 0, 0);
 }
 
-.drawio-container > .properties > .propOptions {
+.drawio-container>.properties>.propOptions {
     grid-area: propFile;
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 3fr 2fr 10fr 9fr;
-
     align-self: center;
     padding-left: 10px;
-    color:#aca2a2;
+    color: #aca2a2;
 }
 
-.drawio-container > .properties > .propOptions > .fa-file:hover {
-    color:white;
+.drawio-container>.properties>.propOptions>.fa-file:hover {
+    color: white;
     cursor: pointer;
 }
 
@@ -59,13 +58,13 @@ html {
     color: black;
 }
 
-.drawio-container > .properties > .propOptions > label {
+.drawio-container>.properties>.propOptions>label {
     font-size: 1.2em;
     align-self: center;
 }
 
-.drawio-container > .properties > .propOptions > label:hover {
-    color:white;
+.drawio-container>.properties>.propOptions>label:hover {
+    color: white;
     cursor: pointer;
 }
 
@@ -80,7 +79,7 @@ aside {
     grid-template-columns: 0.5fr 18fr;
 }
 
-.mainContainer > .drawing-objects {
+.mainContainer>.drawing-objects {
     background-color: #333;
     height: 100%;
     border: 1.5px solid rgb(214, 215, 213);
@@ -91,37 +90,35 @@ aside {
     align-items: center;
 }
 
-.mainContainer > .drawing-objects > .icon {
+.mainContainer>.drawing-objects>.icon {
     font-size: 1.3em;
-    color:#aca2a2
+    color: #aca2a2
 }
 
-.mainContainer > .drawing-objects > .icon:hover {
-    color:white;
+.mainContainer>.drawing-objects>.icon:hover {
+    color: white;
     cursor: pointer;
 }
 
-.mainContainer > .canvas-container {
-    background-color: rgba(155,155,155,0.2);
+.mainContainer>.canvas-container {
+    background-color: rgba(155, 155, 155, 0.2);
     display: grid;
     grid-template-columns: 1fr auto 1fr;
     grid-template-areas:
-    ". canvas .";
+        ". canvas .";
 }
 
 .canvasArrows {
     display: grid;
     grid-template-rows: auto auto 1fr;
     grid-template-areas:
-    "canvas"
-    "arrows";
+        "canvas"
+        "arrows";
 }
 
-.mainContainer > .canvas-container > .textContainer > input {
+.mainContainer>.canvas-container>.textContainer>input {
     box-shadow: 3px 3px 3px rgb(64, 65, 68);
-
-    margin:15px;
-
+    margin: 15px;
     width: 70%;
     border: none;
     height: 50px;
@@ -131,7 +128,7 @@ aside {
     font-size: 1.3em;
 }
 
-.mainContainer > .canvas-container > .textContainer > button {
+.mainContainer>.canvas-container>.textContainer>button {
     display: inline;
     box-shadow: 2px 2px 2px rgb(45, 45, 47);
     border-radius: 2px;
@@ -140,7 +137,7 @@ aside {
     transition: all 0.7s;
 }
 
-.mainContainer > .canvas-container > .textContainer > .buttonNot {
+.mainContainer>.canvas-container>.textContainer>.buttonNot {
     display: inline;
     box-shadow: 2px 2px 2px rgb(45, 45, 47);
     border-radius: 2px;
@@ -150,12 +147,11 @@ aside {
     display: none;
 }
 
-.mainContainer > .canvas-container > .textContainer > button:hover {
+.mainContainer>.canvas-container>.textContainer>button:hover {
     background-color: rgb(143, 143, 154);
-
 }
 
-.mainContainer > .drawing-objects > .selected {
+.mainContainer>.drawing-objects>.selected {
     color: white;
 }
 
@@ -170,25 +166,24 @@ aside {
     display: grid;
     grid-template-columns: 1fr 1fr;
     grid-template-areas:
-    "leftArrow rightArrow";
+        "leftArrow rightArrow";
 }
 
-.canvasArrows .arrowContainer > .fa-arrow-right {
+.canvasArrows .arrowContainer>.fa-arrow-right {
     display: grid;
     justify-self: end;
     grid-area: rightArrow;
     transition: 1s all;
-
 }
 
-.canvasArrows .arrowContainer > .fa-arrow-left {
+.canvasArrows .arrowContainer>.fa-arrow-left {
     display: grid;
     justify-self: start;
     grid-area: leftArrow;
     transition: 1s all;
 }
 
-.canvasArrows .arrowContainer > .fas:hover {
+.canvasArrows .arrowContainer>.fas:hover {
     cursor: pointer;
     background-color: rgb(99, 102, 102);
 }
@@ -198,7 +193,7 @@ aside {
 }
 
 label {
-    justify-self:center;
+    justify-self: center;
     font-size: 1.1em;
 }
 

@@ -124,7 +124,6 @@ $('.fa-download').on('click', function() {
                 }, shape.radius, shape.color, shape.thickness, shape.filled);
                 break;
             case drawio.availableShapes.TEXT:
-                console.log(shape);
                 drawio.selectedElement = new Textt({
                     x: shape.position.x,
                     y: shape.position.y
