@@ -69,6 +69,7 @@ $('.icon').on('click', function() {
     showWidthBox();
     showFontSize();
     showFontFamily();
+    showColor();
 });
 
 $('#widthInput').on('change', function() {

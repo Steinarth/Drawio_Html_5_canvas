@@ -56,6 +56,16 @@ function showFontSize() {
     }
 };
 
+function showColor() {
+    switch (drawio.selectedShape) {
+        case drawio.availableShapes.SELECT:
+            $('#changeColorBtn').addClass('hidden');
+            break;
+        default:
+            $('#changeColorBtn').removeClass('hidden');
+    }
+}
+
 // Decides when to show the drop down for font-family
 function showFontFamily() {
     switch (drawio.selectedShape) {

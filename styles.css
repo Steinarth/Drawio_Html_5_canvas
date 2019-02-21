@@ -55,6 +55,10 @@ html {
     cursor: pointer;
 }
 
+#fontSizeInput, #showFontFamily, #widthInput {
+    color: black;
+}
+
 .drawio-container > .properties > .propOptions > label {
     font-size: 1.2em;
     align-self: center;

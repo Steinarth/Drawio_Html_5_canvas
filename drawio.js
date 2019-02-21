@@ -52,7 +52,7 @@ $(function() {
                 drawio.selectedElement = new Circle({
                     x: mouseEvent.offsetX,
                     y: mouseEvent.offsetY
-                }, drawio.color, drawio.thickness, drawio.fillShape);
+                }, null,drawio.color, drawio.thickness, drawio.fillShape);
                 break;
             case drawio.availableShapes.TEXT:
                 if (drawio.selectedElement) {
