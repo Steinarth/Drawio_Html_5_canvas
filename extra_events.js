@@ -27,9 +27,7 @@ $('.textContainerBtn').on('click', function(e) {
 });
 
 $('#clearCanvas').on('click', function(e) {
-    drawio.ctx.clearRect(0, 0, drawio.canvas.width, drawio.canvas.height);
-    drawio.selectedElement = null;
-    drawio.shapes = [];
+    clearAndEmptyCanvas();
 });
 
 // Functionality for redo-ing
@@ -94,4 +92,54 @@ $('#showFontFamily').on('change', function() {
         drawCanvas();
     }
 
+});
+
+$('.fa-save').on('click', function() {
+    localStorage.setItem('shapes', JSON.stringify(drawio.shapes));
+    clearAndEmptyCanvas();
+});
+
+$('.fa-download').on('click', function() {
+    var shapes = JSON.parse(localStorage.getItem('shapes'));
+    shapes.forEach((shape) => {
+        switch (shape.type) {
+            case drawio.availableShapes.RECTANGLE:
+                drawio.selectedElement = new Rectangle({
+                    x: shape.position.x,
+                    y: shape.position.y
+                }, shape.width, shape.height, shape.filled, shape.color, shape.thickness);
+                break;
+            case drawio.availableShapes.LINE:
+                drawio.selectedElement = new Line({
+                    x: shape.position.x,
+                    y: shape.position.y
+                }, shape.color, shape.thickness);
+                drawio.selectedElement.resize(shape.endPosition.x, shape.endPosition.y);
+                break;
+            case drawio.availableShapes.CIRCLE:
+                drawio.selectedElement = new Circle({
+                    x: shape.position.x,
+                    y: shape.position.y
+                }, shape.radius, shape.color, shape.thickness, shape.filled);
+                break;
+            case drawio.availableShapes.TEXT:
+                console.log(shape);
+                drawio.selectedElement = new Textt({
+                    x: shape.position.x,
+                    y: shape.position.y
+                }, shape.message, shape.color, shape.font, shape.filled);
+                break;
+            case drawio.availableShapes.PEN:
+                drawio.selectedElement = new Drawing({
+                    x: shape.position.x,
+                    y: shape.position.y
+                }, shape.color, shape.thickness);
+                drawio.selectedElement.addPoints(shape.points);
+                break;
+            default:
+        }
+        drawio.shapes.push(drawio.selectedElement);
+        drawCanvas();
+        drawio.selectedElement = null;
+    });
 });

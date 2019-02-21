@@ -10,6 +10,7 @@ function Line(beginPosition, color, thickness) {
         x: null,
         y: null
     }
+    this.type = drawio.availableShapes.LINE;
 };
 
 // Assign the prototype

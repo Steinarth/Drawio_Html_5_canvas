@@ -33,19 +33,8 @@ $(function() {
     showWidthBox();
     showTextBox();
 
-    // Document is loaded and parsed
-    function drawCanvas() {
-        if (drawio.selectedElement) {
-            drawio.selectedElement.render();
-            for (var i = 0; i < drawio.shapes.length; i++) {
-                drawio.shapes[i].render();
-            }
-        }
-    };
-
-    // mousedown
-    $('#my-canvas').on('mousedown', function(mouseEvent) {
-        drawio.color = $('#changeColorBtn')[0].style.backgroundColor;
+    // decides what shape to create/draw
+    let whatShape = function(mouseEvent) {
         switch (drawio.selectedShape) {
             case drawio.availableShapes.RECTANGLE:
                 drawio.selectedElement = new Rectangle({
@@ -79,36 +68,40 @@ $(function() {
                 }, drawio.color, drawio.thickness);
                 break;
             case drawio.availableShapes.SELECT:
-            console.log(mouseEvent.offsetX, mouseEvent.offsetY);
                 drawio.shapes.forEach((el, index) => {
                     if (el.checkSpace(mouseEvent.offsetX, mouseEvent.offsetY) == true) {
                         drawio.selected = true;
                         drawio.selectedElement = drawio.shapes[index];
-                        console.log(drawio.selectedElement);
                         return;
                     }
                 });
                 break;
             default:
-                drawio.selectedElement = new Rectangle({
-                    x: mouseEvent.offsetX,
-                    y: mouseEvent.offsetY
-                }, drawio.color, drawio.thickness);
                 break;
         }
+    }
+
+    // mousedown
+    $('#my-canvas').on('mousedown', function(mouseEvent) {
+        drawio.color = $('#changeColorBtn')[0].style.backgroundColor;
+        whatShape(mouseEvent);
     });
 
     // mousemove
     $('#my-canvas').on('mousemove', function(mouseEvent) {
         if (drawio.selectedElement) {
             if (drawio.selected) {
-                drawio.selectedElement.move({x: mouseEvent.offsetX, y: mouseEvent.offsetY});
-                drawio.ctx.clearRect(0, 0, drawio.canvas.width, drawio.canvas.height);
+                if(drawio.selectedShape == drawio.availableShapes.SELECT) {
+                    drawio.selectedElement.move({x: mouseEvent.offsetX, y: mouseEvent.offsetY}, drawio.selectedElement.text);
+                } else {
+                    drawio.selectedElement.move({x: mouseEvent.offsetX, y: mouseEvent.offsetY}, drawio.text);
+                }
+                clearCanvas();
             } else {
                 if (drawio.selectedElement.type === drawio.availableShapes.TEXT) {
                     return;
                 }
-                drawio.ctx.clearRect(0, 0, drawio.canvas.width, drawio.canvas.height);
+                clearCanvas();
                 drawio.selectedElement.resize(mouseEvent.offsetX, mouseEvent.offsetY);
             }
             drawCanvas();

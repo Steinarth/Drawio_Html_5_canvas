@@ -3,11 +3,13 @@
     * Circle
 **/
 
-function Circle(beginPosition, color, thickness, filled) {
+function Circle(beginPosition, radius,color, thickness, filled) {
     Shape.call(this, beginPosition, color, thickness);
     // We don't know the radius at the beginning
-    this.radius = null;
+    // this.radius = null;
+    radius ? this.radius = radius : this.radius = null
     this.filled = filled;
+    this.type = drawio.availableShapes.CIRCLE;
 };
 
 // Assign the prototype

@@ -66,3 +66,25 @@ function showFontFamily() {
             $('#showFontFamily').addClass('hidden');
     }
 };
+
+// Document is loaded and parsed
+function drawCanvas() {
+    if (drawio.selectedElement) {
+        drawio.selectedElement.render();
+        for (var i = 0; i < drawio.shapes.length; i++) {
+            drawio.shapes[i].render();
+        }
+    }
+};
+
+// Clears the canvas
+function clearCanvas() {
+    drawio.ctx.clearRect(0, 0, drawio.canvas.width, drawio.canvas.height);
+};
+
+// Clears and emptys canvas
+function clearAndEmptyCanvas() {
+    drawio.ctx.clearRect(0, 0, drawio.canvas.width, drawio.canvas.height);
+    drawio.selectedElement = null;
+    drawio.shapes = [];
+}

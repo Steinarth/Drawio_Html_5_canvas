@@ -3,6 +3,7 @@ function Rectangle(position, width, height, filled, thickness, color) {
     this.width = width;
     this.height = height;
     this.filled = filled;
+    this.type   = drawio.availableShapes.RECTANGLE;
 };
 
 // Assign the prototype
@@ -30,4 +31,5 @@ Rectangle.prototype.checkSpace = function(x, y) {
     if (this.position.x < x && x < this.position.x + this.width && this.position.y < y && y < this.position.y + this.height) {
         return true;
     }
+    return false;
 };

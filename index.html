@@ -4,8 +4,10 @@
 <head>
     <title>DrawIO</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.1/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jscolor/2.0.4/jscolor.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 
 </head>
 
@@ -13,7 +15,8 @@
     <div class="drawio-container">
         <nav class="properties">
             <div class="propOptions">
-                <i class="fa fa-file"></i>
+                <i class="far fa-save loader" title="Save"></i>
+                <i class="fas fa-download loader" title="Load"></i>
                 <button id="changeColorBtn" class="jscolor {valueElement:null,value:'#aca2a2'}" style="border:2px solid black">
                     color
                 </button>
@@ -73,7 +76,6 @@
         </div>
     </div>
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="shapes.js" charset="utf-8"></script>
     <script src="drawio.js" charset="utf-8"></script>
     <script src="shapes/Rectangle.js" charset="utf-8"></script>
@@ -83,6 +85,7 @@
     <script src="shapes/Drawing.js" charset="utf-8"></script>
     <script src="show.js" charset="utf-8"></script>
     <script src="extra_events.js" charset="utf-8"></script>
+
 </body>
 
 </html>

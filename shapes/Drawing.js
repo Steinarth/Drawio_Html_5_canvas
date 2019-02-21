@@ -5,7 +5,7 @@
 function Drawing(position, color, thickness) {
     Shape.call(this, position, color, thickness);
     this.points = []; // Keeps track of points we need to draw (x,y) coordinates
-    this.type = 'drawing';
+    this.type = drawio.availableShapes.PEN;
 }
 
 Drawing.prototype = Object.create(Shape.prototype);
@@ -27,7 +27,6 @@ Drawing.prototype.render = function() {
     drawio.ctx.stroke();
 }
 Drawing.prototype.addPoints = function(points) {
-    console.log('addingPoints');
     this.points = points;
 }
 
